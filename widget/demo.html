@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>同宇 AI 客服 · 演示站</title>
+<style>
+  body{font-family:system-ui,'PingFang SC','Microsoft YaHei',sans-serif;margin:0;padding:40px;background:#fafafa;color:#222}
+  .card{max-width:720px;margin:0 auto;background:#fff;padding:32px;border-radius:16px;box-shadow:0 6px 30px rgba(0,0,0,.08)}
+  h1{color:#c41e1e}
+  code{background:#f0f0f0;padding:2px 6px;border-radius:4px}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>同宇 AI 客服演示站</h1>
+    <p>这是一个普通网页。右下角的聊天气泡就是「同宇 AI 客服」挂件——把它嵌到你自己的网站，访客就能直接对话。</p>
+    <h3>怎么用到你自己的网站？</h3>
+    <p>在你网页的 <code>&lt;/body&gt;</code> 前加一行：</p>
+    <pre><code>&lt;script src="http://你的客服服务器:8787/embed.js"
+        data-server="http://你的客服服务器:8787"
+        data-title="在线客服" data-lang="zh" async&gt;&lt;/script&gt;</code></pre>
+    <p>然后编辑 <code>config.json</code> 换成你公司的名称、产品、联系方式、系统提示词即可。知识库放进 <code>knowledge/</code> 目录，客服就会基于你的资料回答。</p>
+  </div>
+
+  <!-- 同宇 AI 客服挂件（可嵌入任意网站） -->
+  <script src="/embed.js" data-server="" data-title="在线客服" data-lang="zh" async></script>
+</body>
+</html>
