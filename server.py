@@ -368,11 +368,17 @@ class Handler(BaseHTTPRequestHandler):
             # 自动留资：消息里出现电话/邮箱/微信等则记录
             if re.search(r"\d{6,}|@|\b微信\b|whatsapp", message, re.I):
                 save_lead({"need": message[:200], "lang": lang, "auto": True})
+        except (ConnectionAbortedError, BrokenPipeError, OSError):
+            # 客户端中途断开连接（关浏览器/curl 中断）属正常，静默退出，不刷 traceback
+            return
         except Exception as e:
-            self.wfile.write(
-                ("data: " + json.dumps({"message": {"content": "（AI 暂时连不上：%s）" % e}},
-                                      ensure_ascii=False) + "\n\n").encode("utf-8"))
-            self.wfile.write(b"data: [DONE]\n\n")
+            try:
+                self.wfile.write(
+                    ("data: " + json.dumps({"message": {"content": "（AI 暂时连不上：%s）" % e}},
+                                          ensure_ascii=False) + "\n\n").encode("utf-8"))
+                self.wfile.write(b"data: [DONE]\n\n")
+            except (ConnectionAbortedError, BrokenPipeError, OSError):
+                pass
 
     def _post_lead(self):
         rec = self._read_json()
